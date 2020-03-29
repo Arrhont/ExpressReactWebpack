@@ -1,3 +1,7 @@
+:root {
+  background-color: #282c34;
+}
+
 h1 {
   color: green;
 }
@@ -5,4 +9,24 @@ h1 {
 body {
   text-align: center;
   margin: auto;
+}
+
+.AppLogo {
+  height: 10vmin;
+  pointer-events: none;
+}
+
+@keyframes AppLogoSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .AppLogo {
+    animation: AppLogoSpin infinite 20s linear;
+  }
 }
