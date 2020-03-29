@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './app.css';
 import ReactImage from './logo.svg';
+import Cart from './Cart';
+import InputField from './InputField'
 
 export default class App extends Component {
   constructor(props) {
@@ -14,7 +16,7 @@ export default class App extends Component {
     };
   }
 
-  changeQuntity = (value) => {
+  changeQuantity = (value) => {
     this.setState({ inputFieldQuantity: value });
   }
 
@@ -32,7 +34,7 @@ export default class App extends Component {
 
   addToCart = () => {
     this.setState(prevState => ({
-      products: ,
+      products: [1, 2, 3],
       inputFieldName: '',
       inputFieldQuantity: '',
       inputFieldCurrency: 'RUB',
@@ -45,7 +47,8 @@ export default class App extends Component {
       inputFieldName,
       inputFieldQuantity,
       inputFieldCurrency,
-      inputFieldPrice
+      inputFieldPrice,
+      products
     } = this.state;
 
     return (
@@ -54,63 +57,27 @@ export default class App extends Component {
           <img className="AppLogo" src={ReactImage} alt="react" />
         </header>
 
-        <form className="ProductInput">
-          <fieldset>
-            <input
-              type="text"
-              value={inputFieldName}
-              className="ProductName"
-              placeholder="Наименование"
-              onChange={event => this.changeProductName(event.target.value)}
-            />
+        <InputField
+          name={inputFieldName}
+          changeProductName={this.changeProductName}
+          quantity={inputFieldQuantity}
+          changeQuantity={this.changeQuantity}
+          currency={inputFieldCurrency}
+          changeCurrency={this.changeCurrency}
+          price={inputFieldPrice}
+          changePrice={this.changePrice}
+          addToCart={this.addToCart}
+        />
 
-            <input
-              type="number"
-              value={inputFieldQuantity}
-              className="ProductQuantity"
-              placeholder="Количество"
-              onChange={
-                (event) => {
-                  this.changeQuntity(event.target.value);
-                }
-              }
-            />
-
-            <select
-              className="CurrencySelect"
-              name="CurrencySelect"
-              value={inputFieldCurrency}
-              onChange={
-                (event) => {
-                  this.changeCurrency(event.target.value);
-                }
-              }
-            >
-              <option value="RUB">RUB</option>
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-
-            </select>
-
-            <input
-              type="number"
-              value={inputFieldPrice}
-              className="ProductPrice"
-              placeholder="Цена"
-              onChange={
-                (event) => {
-                  this.changePrice(event.target.value);
-                }
-              }
-            />
-
-            <input
-              type="button"
-              value="В корзину"
-              onClick={() => this.addToCart()}
-            />
-          </fieldset>
-        </form>
+        {products.length > 0
+        && (
+          <Cart
+            products={products}
+          >
+            pampam
+          </Cart>
+        )
+        }
       </div>
     );
   }
