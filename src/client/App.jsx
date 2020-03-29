@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './app.css';
 import ReactImage from './logo.svg';
 import Cart from './Cart';
-import InputField from './InputField'
+import InputField from './InputField';
+import CartRecord from './CartRecord';
 
 export default class App extends Component {
   constructor(props) {
@@ -16,31 +17,43 @@ export default class App extends Component {
     };
   }
 
-  changeQuantity = (value) => {
-    this.setState({ inputFieldQuantity: value });
-  }
-
   changeProductName = (name) => {
     this.setState({ inputFieldName: name });
-  }
+  };
+
+  changeQuantity = (value) => {
+    this.setState({ inputFieldQuantity: value });
+  };
+
 
   changeCurrency = (currency) => {
     this.setState({ inputFieldCurrency: currency });
-  }
+  };
 
   changePrice = (price) => {
     this.setState({ inputFieldPrice: price });
-  }
+  };
 
   addToCart = () => {
+    const {
+      inputFieldName, inputFieldQuantity, inputFieldCurrency, inputFieldPrice
+    } = this.state;
+
+    const productRecord = {
+      inputFieldName,
+      inputFieldQuantity,
+      inputFieldCurrency,
+      inputFieldPrice
+    };
+
     this.setState(prevState => ({
-      products: [1, 2, 3],
+      products: [...prevState.products, productRecord],
       inputFieldName: '',
       inputFieldQuantity: '',
       inputFieldCurrency: 'RUB',
-      inputFieldPrice: '',
+      inputFieldPrice: ''
     }));
-  }
+  };
 
   render() {
     const {
@@ -69,15 +82,22 @@ export default class App extends Component {
           addToCart={this.addToCart}
         />
 
-        {products.length > 0
-        && (
+        {products.length > 0 && (
           <Cart
             products={products}
+            calculateTotal={this.calculateTotal}
           >
-            pampam
+            {products.map(productRecord => (
+              <CartRecord
+                key={productRecord.inputFieldName}
+                name={productRecord.inputFieldName}
+                quantity={productRecord.inputFieldQuantity}
+                currency={productRecord.inputFieldCurrency}
+                price={productRecord.inputFieldPrice}
+              />
+            ))}
           </Cart>
-        )
-        }
+        )}
       </div>
     );
   }

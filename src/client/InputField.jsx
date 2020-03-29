@@ -10,7 +10,7 @@ export default function InputField(props) {
     changeCurrency,
     price,
     changePrice,
-    addToCart
+    addToCart,
   } = props;
   return (
     <form className="ProductInput">
@@ -52,6 +52,7 @@ export default function InputField(props) {
 
         <input
           type="button"
+          disabled={name === '' || quantity === '' || price === ''}
           value="В корзину"
           onClick={() => addToCart()}
         />
