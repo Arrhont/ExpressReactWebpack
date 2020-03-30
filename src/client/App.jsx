@@ -18,6 +18,10 @@ export default class App extends Component {
     };
   }
 
+  getCorrectPrice = (string) => {
+    return parseFloat(string).toFixed(2);
+  }
+
   changeProductName = (name) => {
     this.setState({ inputFieldName: name });
   };
@@ -44,7 +48,7 @@ export default class App extends Component {
       inputFieldName,
       inputFieldQuantity,
       inputFieldCurrency,
-      inputFieldPrice
+      inputFieldPrice: this.getCorrectPrice(inputFieldPrice)
     };
 
     this.setState(prevState => ({
@@ -107,6 +111,7 @@ export default class App extends Component {
             products={products}
             calculateTotal={this.calculateTotal}
             resetCart={this.resetCart}
+            getCorrectPrice={this.getCorrectPrice}
             prices={prices}
           >
             {products.map(productRecord => (

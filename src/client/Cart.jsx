@@ -3,16 +3,8 @@ import PropTypes from 'prop-types';
 
 export default function Cart(props) {
   const {
-    calculateTotal, children, prices, resetCart
+    calculateTotal, getCorrectPrice, children, prices, resetCart
   } = props;
-
-  function getPriceLikeNumber(num) {
-    const tempArr = num.toString().split('');
-    const commaIndex = tempArr.indexOf('.');
-    if (commaIndex === -1) tempArr.push('.', 0, 0);
-    if (commaIndex === tempArr.length - 2) tempArr.push(0);
-    return tempArr.join('');
-  }
 
   return (
     <div>
@@ -40,7 +32,7 @@ export default function Cart(props) {
               {currency}
             </div>
             <div>
-              {getPriceLikeNumber(total)}
+              {getCorrectPrice(total)}
             </div>
           </div>
         ))}
@@ -51,6 +43,7 @@ export default function Cart(props) {
 
 Cart.propTypes = {
   calculateTotal: PropTypes.func.isRequired,
+  getCorrectPrice: PropTypes.func.isRequired,
   resetCart: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
