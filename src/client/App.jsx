@@ -13,7 +13,8 @@ export default class App extends Component {
       inputFieldQuantity: '',
       inputFieldCurrency: 'RUB',
       inputFieldPrice: '',
-      products: []
+      products: [],
+      prices: []
     };
   }
 
@@ -66,7 +67,7 @@ export default class App extends Component {
       body: JSON.stringify(products),
     })
       .then(response => response.json()
-        .then(answer => console.log(answer)));
+        .then((answer) => { this.setState({ prices: answer }); }));
   }
 
   render() {
@@ -75,7 +76,8 @@ export default class App extends Component {
       inputFieldQuantity,
       inputFieldCurrency,
       inputFieldPrice,
-      products
+      products,
+      prices
     } = this.state;
 
     return (
@@ -100,6 +102,7 @@ export default class App extends Component {
           <Cart
             products={products}
             calculateTotal={this.calculateTotal}
+            prices={prices}
           >
             {products.map(productRecord => (
               <CartRecord

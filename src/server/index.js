@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const nodeFetch = require('node-fetch');
 
-let JSON = {
+const exchangeRates = {
   Date: '2020-03-28T11:30:00+03:00',
   PreviousDate: '2020-03-27T11:30:00+03:00',
   PreviousURL: '//www.cbr-xml-daily.ru/archive/2020/03/27/daily_json.js',
@@ -316,10 +316,17 @@ let JSON = {
     }
   }
 };
+const exchangeRatesJSON = JSON.stringify(exchangeRates);
 
 // nodeFetch('https://www.cbr-xml-daily.ru/daily_json.js')
 //   .then(response => response.text())
-//   .then((answer) => { JSON = answer; });
+//   .then((answer) => { exchangeRatesJSON = answer; });
+
+function getExchangeRate(currency) {
+  const exchangeValues = JSON.parse(exchangeRatesJSON);
+  if (currency === 'RUB') return 1;
+  return exchangeValues.Valute[currency].Value;
+}
 
 const app = express();
 
@@ -328,18 +335,44 @@ app.use(cors());
 app.use(express.json());
 
 function calculatePrices(products) {
-  const result = { RUB: 0, USD: 0, EUR: 0 };
+  const currencySum = new Map();
+
+  // default response with RUB USD and EUR
+  currencySum.set('RUB', 0);
+  currencySum.set('USD', 0);
+  currencySum.set('EUR', 0);
 
   for (const product of products) {
-    result[product.inputFieldCurrency] += product.inputFieldPrice * product.inputFieldQuantity;
+    if (currencySum.has(product.inputFieldCurrency)) {
+      currencySum.set(product.inputFieldCurrency,
+        currencySum.get(product.inputFieldCurrency)
+        + product.inputFieldQuantity * product.inputFieldPrice);
+    } else {
+      currencySum.set(product.inputFieldCurrency,
+        product.inputFieldQuantity * product.inputFieldPrice);
+    }
   }
-  return result;
+
+  let totalInRub = 0;
+
+  for (const [currency, sum] of currencySum) {
+    totalInRub += sum * getExchangeRate(currency);
+  }
+
+  const prices = [];
+
+  for (const [currency] of currencySum) {
+    prices.push([currency,
+      Math.ceil(totalInRub / getExchangeRate(currency) * 100) / 100]);
+  }
+
+  return prices;
 }
 
 app.post('/calculate', (req, res) => {
   const products = req.body;
   const prices = calculatePrices(products);
-  res.send(prices);
+  res.json((prices));
 });
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
