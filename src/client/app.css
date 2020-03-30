@@ -30,3 +30,45 @@ body {
     animation: AppLogoSpin infinite 20s linear;
   }
 }
+
+.Cart{
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content: center;
+  font-size: calc(6px + 1vmin);
+  color:  #61dafb;
+  padding: 5px;
+}
+
+.CartEntry{
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content: center;
+  font-size: calc(6px + 1vmin);
+  color:  #61dafb;
+  padding: 5px;
+  display: flex;
+  width: 100vw;
+  border: 1px #61dafb solid;
+}
+
+.EntryElement{
+  padding: 10px;
+}
+
+.Total {
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content: center;
+  font-size: calc(6px + 1vmin);
+  color:  #61dafb;
+  padding: 5px;
+  border: 1px #61dafb solid;
+}
+
+.CalcButton {
+  margin: 5px;
+}

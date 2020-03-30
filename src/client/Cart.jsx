@@ -4,18 +4,20 @@ import PropTypes from 'prop-types';
 export default function Cart(props) {
   const { calculateTotal, children, prices } = props;
   return (
-    <div className="Cart">
-      {children}
+    <div>
+      <div className="Cart">
+        {children}
+      </div>
       <button
+        className="CalcButton"
         type="button"
         onClick={() => calculateTotal()}
       >
         Посчитать стоимость
       </button>
       <div className="Total">
-        Итого:
         {prices.map(([currency, total]) => (
-          <div>
+          <div className="EntryElement">
             <div>
               {currency}
             </div>

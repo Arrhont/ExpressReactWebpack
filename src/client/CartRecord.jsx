@@ -6,11 +6,11 @@ export default function CartRecord(props) {
     name, quantity, currency, price
   } = props;
   return (
-    <div>
-      <div>{name}</div>
-      <div>{quantity}</div>
-      <div>{currency}</div>
-      <div>{price}</div>
+    <div className="CartEntry">
+      <div className="EntryElement">{`Наименование: ${name}`}</div>
+      <div className="EntryElement">{`Количество: ${quantity}`}</div>
+      <div className="EntryElement">{`Валюта: ${currency}`}</div>
+      <div className="EntryElement">{`Цена: ${price}`}</div>
     </div>
   );
 }
