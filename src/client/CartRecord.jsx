@@ -17,7 +17,7 @@ export default function CartRecord(props) {
 
 CartRecord.propTypes = {
   name: PropTypes.string.isRequired,
-  quantity: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
+  quantity: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
   currency: PropTypes.string.isRequired
 };

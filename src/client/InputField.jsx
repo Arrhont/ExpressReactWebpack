@@ -64,12 +64,12 @@ export default function InputField(props) {
 
 InputField.propTypes = {
   name: PropTypes.string.isRequired,
-  quantity: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
+  quantity: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
   currency: PropTypes.string.isRequired,
   changeProductName: PropTypes.func.isRequired,
   changeQuantity: PropTypes.func.isRequired,
   changeCurrency: PropTypes.func.isRequired,
   changePrice: PropTypes.func.isRequired,
-  addToCart: PropTypes.func.isRequired,
+  addToCart: PropTypes.func.isRequired
 };

@@ -58,7 +58,7 @@ export default class App extends Component {
   calculateTotal = () => {
     const { products } = this.state;
 
-    fetch('/calculate', {
+    fetch('http://localhost:8080/calculate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
