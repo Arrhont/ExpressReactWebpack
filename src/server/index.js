@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const nodeFetch = require('node-fetch');
 
-const exchangeRates = {
+const fallbackData = {
   Date: '2020-03-28T11:30:00+03:00',
   PreviousDate: '2020-03-27T11:30:00+03:00',
   PreviousURL: '//www.cbr-xml-daily.ru/archive/2020/03/27/daily_json.js',
@@ -316,15 +316,14 @@ const exchangeRates = {
     }
   }
 };
-let exchangeRatesJSON = JSON.stringify(exchangeRates);
+let exchangeRatesJSON;
 
 nodeFetch('https://www.cbr-xml-daily.ru/daily_json.js')
-  .then(response => response.text(), {
-    mode: 'no-cors'
-  })
-  .then((answer) => {
-    exchangeRatesJSON = answer;
-    console.log(answer);
+  .then(response => response.json())
+  .then((answer) => { exchangeRatesJSON = answer; })
+  .catch((err) => {
+    console.log(err.message);
+    exchangeRatesJSON = JSON.stringify(fallbackData);
   });
 
 function getExchangeRate(currency) {
