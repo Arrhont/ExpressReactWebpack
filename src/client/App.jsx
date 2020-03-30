@@ -18,9 +18,7 @@ export default class App extends Component {
     };
   }
 
-  getCorrectPrice = (string) => {
-    return parseFloat(string).toFixed(2);
-  }
+  getCorrectPrice = string => parseFloat(string).toFixed(2);
 
   changeProductName = (name) => {
     this.setState({ inputFieldName: name });
