@@ -316,11 +316,16 @@ const exchangeRates = {
     }
   }
 };
-const exchangeRatesJSON = JSON.stringify(exchangeRates);
+let exchangeRatesJSON = JSON.stringify(exchangeRates);
 
-// nodeFetch('https://www.cbr-xml-daily.ru/daily_json.js')
-//   .then(response => response.text())
-//   .then((answer) => { exchangeRatesJSON = answer; });
+nodeFetch('https://www.cbr-xml-daily.ru/daily_json.js')
+  .then(response => response.text(), {
+    mode: 'no-cors'
+  })
+  .then((answer) => {
+    exchangeRatesJSON = answer;
+    console.log(answer);
+  });
 
 function getExchangeRate(currency) {
   const exchangeValues = JSON.parse(exchangeRatesJSON);

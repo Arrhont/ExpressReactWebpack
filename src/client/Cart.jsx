@@ -2,7 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function Cart(props) {
-  const { calculateTotal, children, prices } = props;
+  const {
+    calculateTotal, children, prices, resetCart
+  } = props;
+
+  function getPriceLikeNumber(num) {
+    const tempArr = num.toString().split('');
+    const commaIndex = tempArr.indexOf('.');
+    if (commaIndex === -1) tempArr.push('.', 0, 0);
+    if (commaIndex === tempArr.length - 2) tempArr.push(0);
+    return tempArr.join('');
+  }
+
   return (
     <div>
       <div className="Cart">
@@ -15,14 +26,21 @@ export default function Cart(props) {
       >
         Посчитать стоимость
       </button>
+      <button
+        className="CalcButton"
+        type="button"
+        onClick={() => resetCart()}
+      >
+        Очистить корзину
+      </button>
       <div className="Total">
         {prices.map(([currency, total]) => (
-          <div className="EntryElement">
+          <div className="EntryElement" key={currency}>
             <div>
               {currency}
             </div>
             <div>
-              {total}
+              {getPriceLikeNumber(total)}
             </div>
           </div>
         ))}
@@ -33,6 +51,7 @@ export default function Cart(props) {
 
 Cart.propTypes = {
   calculateTotal: PropTypes.func.isRequired,
+  resetCart: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   prices: PropTypes.array.isRequired

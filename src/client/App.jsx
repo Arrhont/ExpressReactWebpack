@@ -56,6 +56,10 @@ export default class App extends Component {
     }));
   };
 
+  resetCart = () => {
+    this.setState({ products: [] });
+  }
+
   calculateTotal = () => {
     const { products } = this.state;
 
@@ -102,6 +106,7 @@ export default class App extends Component {
           <Cart
             products={products}
             calculateTotal={this.calculateTotal}
+            resetCart={this.resetCart}
             prices={prices}
           >
             {products.map(productRecord => (
