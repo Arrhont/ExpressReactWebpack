@@ -55,6 +55,20 @@ export default class App extends Component {
     }));
   };
 
+  calculateTotal = () => {
+    const { products } = this.state;
+
+    fetch('/calculate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(products),
+    })
+      .then(response => response.json()
+        .then(answer => console.log(answer)));
+  }
+
   render() {
     const {
       inputFieldName,

@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Cart(props) {
-  const {calculateTotal}
+  const { calculateTotal, children } = props;
   return (
     <div className="Cart">
-      {props.children}
+      {children}
       <button
         type="button"
         onClick={() => calculateTotal()}
@@ -17,3 +18,8 @@ export default function Cart(props) {
     </div>
   );
 }
+
+Cart.propTypes = {
+  calculateTotal: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired
+};

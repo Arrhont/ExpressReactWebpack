@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function InputField(props) {
   const {
@@ -60,3 +61,15 @@ export default function InputField(props) {
     </form>
   );
 }
+
+InputField.propTypes = {
+  name: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+  currency: PropTypes.string.isRequired,
+  changeProductName: PropTypes.func.isRequired,
+  changeQuantity: PropTypes.func.isRequired,
+  changeCurrency: PropTypes.func.isRequired,
+  changePrice: PropTypes.func.isRequired,
+  addToCart: PropTypes.func.isRequired,
+};
